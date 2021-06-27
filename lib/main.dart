@@ -27,32 +27,65 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final widgets = <Widget>[];
+
+  void buildWidgets() {
+    for (var i = 0; i < 50; i++) {
+      final itemsRow = <Widget>[];
+      for (var j = 0; j < 3; j++) {
+        itemsRow.add(Container(
+            width: 100,
+            height: 100,
+            color: i % 2 == 0 ? Colors.green : Colors.red,
+            child: Center(child: Text(i.toString())),
+          )
+        );
+      }
+      widgets.add(Row(
+        children: itemsRow,
+      ));
+    }
+    print(widgets);
+  }
+
+  @override
+  void initState() {
+    buildWidgets();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: GridView(
-        gridDelegate:
-        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        children: List.generate(
-          50,
-          (index) => index % 2 == 0
-          ? Container(
-            color: Colors.green,
-            child: Center(
-              child: Text(index.toString()),
-            )
-          )
-          : Container(
-            color: Colors.red,
-            child: Center(
-              child: Text(index.toString()),
-            ),
-          )
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          buildWidgets();
+        },
       ),
+      body: ListView(
+        children: widgets,
+      ),
+      // body: GridView(
+      //   gridDelegate:
+      //       SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+      //   children: List.generate(
+      //       50,
+      //       (index) => index % 2 == 0
+      //           ? Container(
+      //               color: Colors.green,
+      //               child: Center(
+      //                 child: Text(index.toString()),
+      //               ))
+      //           : Container(
+      //               color: Colors.red,
+      //               child: Center(
+      //                 child: Text(index.toString()),
+      //               ),
+      //             )),
+      // ),
     );
   }
 }
