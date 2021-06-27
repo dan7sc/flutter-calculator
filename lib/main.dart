@@ -34,13 +34,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: GridView(
-        scrollDirection: Axis.horizontal,
         gridDelegate:
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         children: List.generate(
           50,
           (index) => Container(
             color: index % 2 == 0 ? Colors.green : Colors.red,
+            child: Center(
+              child: Text(index.toString()),
+            ),
           ),
         ),
       ),
