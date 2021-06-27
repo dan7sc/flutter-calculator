@@ -43,18 +43,29 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 3,
             child: StaggeredGridView.countBuilder(
               crossAxisCount: 4,
-              itemCount: 8,
+              itemCount: 18,
               itemBuilder: (BuildContext context, int index) => new Container(
-                color: Colors.green,
+                color: Color(0xFF212121),
                 child: new Center(
-                  child: new CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: new Text('$index'),
+                  child: new Text(
+                    index.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                    ),
                   ),
                 ),
               ),
-              staggeredTileBuilder: (int index) =>
-              new StaggeredTile.count(2, index.isEven ? 2 : 1),
+              staggeredTileBuilder: (int index) {
+                if(index == 15) {
+                  return StaggeredTile.count(1, 2);
+                } else if(index ==16) {
+                  return StaggeredTile.count(2, 1);
+                } else {
+                  return StaggeredTile.count(1, 1);
+                }
+              },
               mainAxisSpacing: 4.0,
               crossAxisSpacing: 4.0,
             ),
