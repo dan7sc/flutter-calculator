@@ -52,15 +52,21 @@ class _MyHomePageState extends State<MyHomePage> {
             child: StaggeredGridView.countBuilder(
               crossAxisCount: 4,
               itemCount: 18,
-              itemBuilder: (BuildContext context, int index) => Container(
-                color: index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
-                child: new Center(
-                  child: new Text(
-                    options[index],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28,
+              itemBuilder: (BuildContext context, int index) =>
+              GestureDetector(
+                onTap: () {
+                  print(options[index]);
+                },
+                child: Container(
+                  color: index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
+                  child: Center(
+                    child: Text(
+                      options[index],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                      ),
                     ),
                   ),
                 ),
