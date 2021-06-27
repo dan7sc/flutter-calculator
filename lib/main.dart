@@ -34,6 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: GridView(
+        scrollDirection: Axis.horizontal,
         gridDelegate:
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         children: List.generate(
