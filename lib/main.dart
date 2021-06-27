@@ -30,15 +30,19 @@ class _MyHomePageState extends State<MyHomePage> {
   final widgets = <Widget>[];
 
   void buildWidgets() {
+    var index = 0;
+
     for (var i = 0; i < 50; i++) {
       final itemsRow = <Widget>[];
       for (var j = 0; j < 3; j++) {
-        itemsRow.add(Container(
-            width: 100,
-            height: 100,
-            color: i % 2 == 0 ? Colors.green : Colors.red,
-            child: Center(child: Text(i.toString())),
-          )
+        itemsRow.add(Expanded(
+            child: Container(
+              width: 100,
+              height: 100,
+              color: (i + j + 1) % 2 == 0 ? Colors.green : Colors.red,
+              child: Center(child: Text((3 * i + j).toString())),
+            ),
+          ),
         );
       }
       widgets.add(Row(
