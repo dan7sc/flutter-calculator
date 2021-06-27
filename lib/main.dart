@@ -28,6 +28,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final options = [
+    "AC", "%", "*", "/",
+    "7", "8", "9", "-",
+    "4", "5", "6", "+",
+    "1", "2", "3", "=",
+    "0", "."
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
             child: StaggeredGridView.countBuilder(
               crossAxisCount: 4,
               itemCount: 18,
-              itemBuilder: (BuildContext context, int index) => new Container(
-                color: Color(0xFF212121),
+              itemBuilder: (BuildContext context, int index) => Container(
+                color: index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
                 child: new Center(
                   child: new Text(
-                    index.toString(),
+                    options[index],
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -58,9 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               staggeredTileBuilder: (int index) {
-                if(index == 15) {
+                if (index == 15) {
                   return StaggeredTile.count(1, 2);
-                } else if(index ==16) {
+                } else if (index == 16) {
                   return StaggeredTile.count(2, 1);
                 } else {
                   return StaggeredTile.count(1, 1);
