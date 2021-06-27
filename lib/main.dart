@@ -41,26 +41,24 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             flex: 3,
             child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 150),
               children: List.generate(
                 18,
-                (index) => index % 2 == 0
-                ? Container(
-                  color: Colors.green,
+                (index) => Container(
+                  color: Color(0xFF212121),
                   child: Center(
-                    child: Text(index.toString()),
-                  )
-                )
-                : Container(
-                  color: Colors.red,
-                  child: Center(
-                    child: Text(index.toString()),
+                    child: Text(
+                      index.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28
+                      ),
+                    ),
                   ),
                 )
-              ),
+              )
             ),
           ),
         ],
