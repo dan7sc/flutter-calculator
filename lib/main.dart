@@ -35,21 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: GridView(
         gridDelegate:
-        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        children: [
-          Container(
-            color: Colors.green,
+        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        children: List.generate(
+          50,
+          (index) => Container(
+            color: index % 2 == 0 ? Colors.green : Colors.red,
           ),
-          Container(
-            color: Colors.red,
-          ),
-          Container(
-            color: Colors.red,
-          ),
-          Container(
-            color: Colors.green,
-          ),
-        ],
+        ),
       ),
     );
   }
