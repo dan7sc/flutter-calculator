@@ -66,32 +66,32 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          buildWidgets();
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView(
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+              children: List.generate(
+                18,
+                (index) => index % 2 == 0
+                ? Container(
+                  color: Colors.green,
+                  child: Center(
+                    child: Text(index.toString()),
+                  )
+                )
+                : Container(
+                  color: Colors.red,
+                  child: Center(
+                    child: Text(index.toString()),
+                  ),
+                )
+              ),
+            ),
+          ),
+        ],
       ),
-      body: ListView(
-        children: widgets,
-      ),
-      // body: GridView(
-      //   gridDelegate:
-      //       SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-      //   children: List.generate(
-      //       50,
-      //       (index) => index % 2 == 0
-      //           ? Container(
-      //               color: Colors.green,
-      //               child: Center(
-      //                 child: Text(index.toString()),
-      //               ))
-      //           : Container(
-      //               color: Colors.red,
-      //               child: Center(
-      //                 child: Text(index.toString()),
-      //               ),
-      //             )),
-      // ),
     );
   }
 }
