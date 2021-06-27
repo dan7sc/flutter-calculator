@@ -40,68 +40,77 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.black,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Text(
-                    "0",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w500,
+      body: SafeArea(
+        top: true,
+        bottom: true,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      right: 24.0,
+                      bottom: 26.0,
+                      left: 24.0,
                     ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Container(
-              child: StaggeredGridView.countBuilder(
-                padding: EdgeInsets.zero,
-                crossAxisCount: 4,
-                itemCount: 18,
-                itemBuilder: (BuildContext context, int index) =>
-                GestureDetector(
-                  onTap: () {
-                    print(options[index]);
-                  },
-                  child: Container(
-                    color: index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
-                    child: Center(
-                      child: Text(
-                        options[index],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                        ),
+                    child: Text(
+                      "0",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ),
-                staggeredTileBuilder: (int index) {
-                  if (index == 15) {
-                    return StaggeredTile.count(1, 2);
-                  } else if (index == 16) {
-                    return StaggeredTile.count(2, 1);
-                  } else {
-                    return StaggeredTile.count(1, 1);
-                  }
-                },
-                mainAxisSpacing: 4.0,
-                crossAxisSpacing: 4.0,
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 4,
+              child: Container(
+                child: StaggeredGridView.countBuilder(
+                  padding: EdgeInsets.zero,
+                  crossAxisCount: 4,
+                  itemCount: 18,
+                  itemBuilder: (BuildContext context, int index) =>
+                  GestureDetector(
+                    onTap: () {
+                      print(options[index]);
+                    },
+                    child: Container(
+                      color:
+                          index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
+                      child: Center(
+                        child: Text(
+                          options[index],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  staggeredTileBuilder: (int index) {
+                    if (index == 15) {
+                      return StaggeredTile.count(1, 2);
+                    } else if (index == 16) {
+                      return StaggeredTile.count(2, 1);
+                    } else {
+                      return StaggeredTile.count(1, 1);
+                    }
+                  },
+                  mainAxisSpacing: 4.0,
+                  crossAxisSpacing: 4.0,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
