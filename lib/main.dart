@@ -69,6 +69,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           Expanded(
+            child: Container(
+              color: Colors.black,
+            ),
+          ),
+          Expanded(
             child: GridView(
               gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
