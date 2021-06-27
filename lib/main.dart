@@ -38,12 +38,19 @@ class _MyHomePageState extends State<MyHomePage> {
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         children: List.generate(
           50,
-          (index) => Container(
-            color: index % 2 == 0 ? Colors.green : Colors.red,
+          (index) => index % 2 == 0
+          ? Container(
+            color: Colors.green,
+            child: Center(
+              child: Text(index.toString()),
+            )
+          )
+          : Container(
+            color: Colors.red,
             child: Center(
               child: Text(index.toString()),
             ),
-          ),
+          )
         ),
       ),
     );
