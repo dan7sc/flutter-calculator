@@ -30,15 +30,14 @@ class _MyHomePageState extends State<MyHomePage> {
   final widgets = <Widget>[];
 
   void buildWidgets() {
-    var index = 0;
-
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 50 / 3; i++) {
       final itemsRow = <Widget>[];
       for (var j = 0; j < 3; j++) {
-        itemsRow.add(Expanded(
+        itemsRow.add(
+          Expanded(
             child: Container(
-              width: 100,
-              height: 100,
+              width: MediaQuery.of(context).size.width / 3,
+              height: MediaQuery.of(context).size.width / 3,
               color: (i + j + 1) % 2 == 0 ? Colors.green : Colors.red,
               child: Center(child: Text((3 * i + j).toString())),
             ),
@@ -49,12 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
         children: itemsRow,
       ));
     }
-    print(widgets);
+    // Future.delayed(Duration(milliseconds: 2000)).then((_) => setState(() {}));
+    setState(() {});
   }
 
   @override
   void initState() {
-    buildWidgets();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      buildWidgets();
+    });
     super.initState();
   }
 
