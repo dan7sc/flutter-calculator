@@ -27,45 +27,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final widgets = <Widget>[];
-
-  void buildWidgets() {
-    for (var i = 0; i < 50 / 3; i++) {
-      final itemsRow = <Widget>[];
-      for (var j = 0; j < 3; j++) {
-        itemsRow.add(
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width / 3,
-              height: MediaQuery.of(context).size.width / 3,
-              color: (i + j + 1) % 2 == 0 ? Colors.green : Colors.red,
-              child: Center(child: Text((3 * i + j).toString())),
-            ),
-          ),
-        );
-      }
-      widgets.add(Row(
-        children: itemsRow,
-      ));
-    }
-    // Future.delayed(Duration(milliseconds: 2000)).then((_) => setState(() {}));
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      buildWidgets();
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      backgroundColor: Colors.black,
       body: Column(
         children: [
           Expanded(
@@ -74,9 +39,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Expanded(
+            flex: 3,
             child: GridView(
-              gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 4),
               children: List.generate(
                 18,
                 (index) => index % 2 == 0
