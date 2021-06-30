@@ -88,106 +88,103 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               flex: 4,
-              child: Container(
-                child: StaggeredGridView.countBuilder(
-                  padding: EdgeInsets.zero,
-                  crossAxisCount: 4,
-                  itemCount: 18,
-                  itemBuilder: (BuildContext context, int index) =>
-                      GestureDetector(
-                    onTap: () {
-                      final op = options[index];
-                      operation += options[index];
+              child: StaggeredGridView.countBuilder(
+                padding: EdgeInsets.zero,
+                crossAxisCount: 4,
+                itemCount: 18,
+                itemBuilder: (BuildContext context, int index) =>
+                    GestureDetector(
+                  onTap: () {
+                    final op = options[index];
+                    operation += options[index];
 
-                      if (a != null && b != null && currentOp != null) {
-                        if (currentOp == "+") {
-                          result = a + b;
-                        } else if (currentOp == "-") {
-                          result = a - b;
-                        } else if (currentOp == "/") {
-                          result = a / b;
-                        } else if (currentOp == "%") {
-                          result = a % b;
-                        } else if (currentOp == "*") {
-                          result = a * b;
+                    if (a != null && b != null && currentOp != null) {
+                      if (currentOp == "+") {
+                        result = a + b;
+                      } else if (currentOp == "-") {
+                        result = a - b;
+                      } else if (currentOp == "/") {
+                        result = a / b;
+                      } else if (currentOp == "%") {
+                        result = a % b;
+                      } else if (currentOp == "*") {
+                        result = a * b;
+                      }
+                      a = result;
+                      b = null;
+                    }
+
+                    switch (op) {
+                      case "AC":
+                        {
+                          a = null;
+                          b = null;
+                          result = 0.0;
+                          operation = "0";
+                          break;
                         }
-                        a = result;
-                        b = null;
-                      }
+                      case "+":
+                        {
+                          currentOp = op;
+                          break;
+                        }
+                      case "-":
+                        {
+                          currentOp = op;
+                          break;
+                        }
+                      case "*":
+                        {
+                          currentOp = op;
+                          break;
+                        }
+                      case "/":
+                        {
+                          currentOp = op;
+                          break;
+                        }
+                      case "=":
+                        {
+                          operation = result.toString();
+                          break;
+                        }
+                      default:
+                        {
+                          if (a == null) {
+                            a = double.parse(op);
+                          } else {
+                            b = double.parse(op);
+                          }
+                        }
+                    }
 
-                      switch (op) {
-                        case "AC":
-                          {
-                            a = null;
-                            b = null;
-                            result = 0.0;
-                            operation = "0";
-                            break;
-                          }
-                        case "+":
-                          {
-                            currentOp = op;
-                            break;
-                          }
-                        case "-":
-                          {
-                            currentOp = op;
-                            break;
-                          }
-                        case "*":
-                          {
-                            currentOp = op;
-                            break;
-                          }
-                        case "/":
-                          {
-                            currentOp = op;
-                            break;
-                          }
-                        case "=":
-                          {
-                            operation = result.toString();
-                            break;
-                          }
-                        default:
-                          {
-                            if (a == null) {
-                              a = double.parse(op);
-                            } else {
-                              b = double.parse(op);
-                            }
-                          }
-                      }
-
-                      setState(() {});
-                    },
-                    child: Container(
-                      color:
-                          index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
-                      child: Center(
-                        child: Text(
-                          options[index],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                          ),
+                    setState(() {});
+                  },
+                  child: Container(
+                    color: index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
+                    child: Center(
+                      child: Text(
+                        options[index],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
                         ),
                       ),
                     ),
                   ),
-                  staggeredTileBuilder: (int index) {
-                    if (index == 15) {
-                      return StaggeredTile.count(1, 2);
-                    } else if (index == 16) {
-                      return StaggeredTile.count(2, 1);
-                    } else {
-                      return StaggeredTile.count(1, 1);
-                    }
-                  },
-                  mainAxisSpacing: 4.0,
-                  crossAxisSpacing: 4.0,
                 ),
+                staggeredTileBuilder: (int index) {
+                  if (index == 15) {
+                    return StaggeredTile.count(1, 2);
+                  } else if (index == 16) {
+                    return StaggeredTile.count(2, 1);
+                  } else {
+                    return StaggeredTile.count(1, 1);
+                  }
+                },
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
               ),
             ),
           ],
