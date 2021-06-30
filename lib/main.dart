@@ -27,7 +27,101 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class CalcController {
+  var result = 0.0;
+  var a;
+  var b;
+  var currentOp = "0";
+  String operation = "";
+  List<String> textArray = <String>[];
+
+  void inputData(int index) {
+    final op = options[index];
+    operation += options[index];
+
+    if (operation.endsWith("=")) {
+      operation = operation.replaceAll("=", "");
+
+      while (operation.contains(op)) {
+        String _currentOp = "";
+        String current = "";
+
+        for (int i = 0; operation.length > i; i++) {
+          if (RegExp("^[0-9]").hasMatch(current)) {
+            current += operation[i];
+          } else if(_currentOp.isEmpty) {
+            _currentOp = operation[i];
+            current += operation[i];
+          } else {
+            operation.replaceFirst(current, calculate(current).toString());
+          }
+        }
+      }
+    }
+
+    switch (op) {
+      case "AC":
+      {
+        a = null;
+        b = null;
+        result = 0.0;
+        operation = "0";
+        break;
+      }
+      case "+":
+      {
+        currentOp = op;
+        break;
+      }
+      case "-":
+      {
+        currentOp = op;
+        break;
+      }
+      case "*":
+      {
+        currentOp = op;
+        break;
+      }
+      case "/":
+      {
+        currentOp = op;
+        break;
+      }
+      case "=":
+      {
+        if(currentOp != null) operation = result.toString();
+        break;
+      }
+      default:
+      {
+        if (a == null) {
+          a = double.parse(op);
+        } else {
+          b = double.parse(op);
+        }
+      }
+    }
+  }
+
+  bool? checkOperator() {}
+
+  double? calculate(String current) {
+    if (currentOp == '*') {
+      textArray = current.split(currentOp);
+      return double.parse(textArray[0]) * double.parse(textArray[1]);
+    } else if (currentOp == '/') {
+      textArray = current.split(currentOp);
+      return double.parse(textArray[0]) / double.parse(textArray[1]);
+    } else if (currentOp == '+') {
+      textArray = current.split(currentOp);
+      return double.parse(textArray[0]) + double.parse(textArray[1]);
+    } else if (currentOp == '-') {
+      textArray = current.split(currentOp);
+      return double.parse(textArray[0]) - double.parse(textArray[1]);
+    }
+  }
+
   final options = [
     "AC",
     "%",
@@ -48,11 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
     "0",
     "."
   ];
-  var operation = "0";
-  var result = 0.0;
-  var a;
-  var b;
-  var currentOp;
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var controller = new CalcController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       left: 24.0,
                     ),
                     child: Text(
-                      operation,
+                      controller.operation,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 50,
@@ -95,76 +188,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (BuildContext context, int index) =>
                     GestureDetector(
                   onTap: () {
-                    final op = options[index];
-                    operation += options[index];
-
-                    if (a != null && b != null && currentOp != null) {
-                      if (currentOp == "+") {
-                        result = a + b;
-                      } else if (currentOp == "-") {
-                        result = a - b;
-                      } else if (currentOp == "/") {
-                        result = a / b;
-                      } else if (currentOp == "%") {
-                        result = a % b;
-                      } else if (currentOp == "*") {
-                        result = a * b;
-                      }
-                      a = result;
-                      b = null;
-                    }
-
-                    switch (op) {
-                      case "AC":
-                        {
-                          a = null;
-                          b = null;
-                          result = 0.0;
-                          operation = "0";
-                          break;
-                        }
-                      case "+":
-                        {
-                          currentOp = op;
-                          break;
-                        }
-                      case "-":
-                        {
-                          currentOp = op;
-                          break;
-                        }
-                      case "*":
-                        {
-                          currentOp = op;
-                          break;
-                        }
-                      case "/":
-                        {
-                          currentOp = op;
-                          break;
-                        }
-                      case "=":
-                        {
-                          operation = result.toString();
-                          break;
-                        }
-                      default:
-                        {
-                          if (a == null) {
-                            a = double.parse(op);
-                          } else {
-                            b = double.parse(op);
-                          }
-                        }
-                    }
-
+                    controller.inputData(index);
                     setState(() {});
                   },
                   child: Container(
                     color: index == 15 ? Color(0xFFF57C00) : Color(0xFF212121),
                     child: Center(
                       child: Text(
-                        options[index],
+                        controller.options[index],
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
