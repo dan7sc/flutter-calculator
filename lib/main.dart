@@ -29,12 +29,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final options = [
-    "AC", "%", "*", "/",
-    "7", "8", "9", "-",
-    "4", "5", "6", "+",
-    "1", "2", "3", "=",
-    "0", "."
+    "AC",
+    "%",
+    "*",
+    "/",
+    "7",
+    "8",
+    "9",
+    "-",
+    "4",
+    "5",
+    "6",
+    "+",
+    "1",
+    "2",
+    "3",
+    "=",
+    "0",
+    "."
   ];
+  var operation = "0";
+  var result = 0.0;
+  var a;
+  var b;
+  var currentOp;
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +71,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Padding(
                     padding: const EdgeInsets.only(
                       right: 24.0,
-                      bottom: 26.0,
+                      bottom: 24.0,
                       left: 24.0,
                     ),
                     child: Text(
-                      "0",
+                      operation,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 50,
@@ -76,9 +94,72 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisCount: 4,
                   itemCount: 18,
                   itemBuilder: (BuildContext context, int index) =>
-                  GestureDetector(
+                      GestureDetector(
                     onTap: () {
-                      print(options[index]);
+                      final op = options[index];
+                      operation += options[index];
+
+                      if (a != null && b != null && currentOp != null) {
+                        if (currentOp == "+") {
+                          result = a + b;
+                        } else if (currentOp == "-") {
+                          result = a - b;
+                        } else if (currentOp == "/") {
+                          result = a / b;
+                        } else if (currentOp == "%") {
+                          result = a % b;
+                        } else if (currentOp == "*") {
+                          result = a * b;
+                        }
+                        a = result;
+                        b = null;
+                      }
+
+                      switch (op) {
+                        case "AC":
+                          {
+                            a = null;
+                            b = null;
+                            result = 0.0;
+                            operation = "0";
+                            break;
+                          }
+                        case "+":
+                          {
+                            currentOp = op;
+                            break;
+                          }
+                        case "-":
+                          {
+                            currentOp = op;
+                            break;
+                          }
+                        case "*":
+                          {
+                            currentOp = op;
+                            break;
+                          }
+                        case "/":
+                          {
+                            currentOp = op;
+                            break;
+                          }
+                        case "=":
+                          {
+                            operation = result.toString();
+                            break;
+                          }
+                        default:
+                          {
+                            if (a == null) {
+                              a = double.parse(op);
+                            } else {
+                              b = double.parse(op);
+                            }
+                          }
+                      }
+
+                      setState(() {});
                     },
                     child: Container(
                       color:
