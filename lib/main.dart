@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:developer';
 
 void main() {
   runApp(MyApp());
@@ -31,94 +32,54 @@ class CalcController {
   var result = 0.0;
   var a;
   var b;
-  var currentOp = "0";
-  String operation = "";
-  List<String> textArray = <String>[];
+  var currentOp;
+  var operation = "";
 
   void inputData(int index) {
     final op = options[index];
-    operation += options[index];
 
-    if (operation.endsWith("=")) {
-      operation = operation.replaceAll("=", "");
-
-      while (operation.contains(op)) {
-        String _currentOp = "";
-        String current = "";
-
-        for (int i = 0; operation.length > i; i++) {
-          if (RegExp("^[0-9]").hasMatch(current)) {
-            current += operation[i];
-          } else if(_currentOp.isEmpty) {
-            _currentOp = operation[i];
-            current += operation[i];
-          } else {
-            operation.replaceFirst(current, calculate(current).toString());
-          }
-        }
-      }
+    if (options[index] == "=") {
+      operation = separatesFunctionIntoSmallerFunctions(
+        operation, '*', '/');
+      operation = separatesFunctionIntoSmallerFunctions(
+        operation, '-', '+');
+    } else {
+      operation += options[index];
     }
 
     switch (op) {
       case "AC":
-      {
-        a = null;
-        b = null;
-        result = 0.0;
-        operation = "0";
-        break;
-      }
-      case "+":
-      {
-        currentOp = op;
-        break;
-      }
-      case "-":
-      {
-        currentOp = op;
-        break;
-      }
-      case "*":
-      {
-        currentOp = op;
-        break;
-      }
-      case "/":
-      {
-        currentOp = op;
-        break;
-      }
-      case "=":
-      {
-        if(currentOp != null) operation = result.toString();
-        break;
-      }
-      default:
-      {
-        if (a == null) {
-          a = double.parse(op);
-        } else {
-          b = double.parse(op);
+        {
+          a = null;
+          b = null;
+          result = 0.0;
+          operation = "";
+          break;
         }
-      }
-    }
-  }
-
-  bool? checkOperator() {}
-
-  double? calculate(String current) {
-    if (currentOp == '*') {
-      textArray = current.split(currentOp);
-      return double.parse(textArray[0]) * double.parse(textArray[1]);
-    } else if (currentOp == '/') {
-      textArray = current.split(currentOp);
-      return double.parse(textArray[0]) / double.parse(textArray[1]);
-    } else if (currentOp == '+') {
-      textArray = current.split(currentOp);
-      return double.parse(textArray[0]) + double.parse(textArray[1]);
-    } else if (currentOp == '-') {
-      textArray = current.split(currentOp);
-      return double.parse(textArray[0]) - double.parse(textArray[1]);
+      case "+":
+        {
+          currentOp = op;
+          break;
+        }
+      case "-":
+        {
+          currentOp = op;
+          break;
+        }
+      case "*":
+        {
+          currentOp = op;
+          break;
+        }
+      case "/":
+        {
+          currentOp = op;
+          break;
+        }
+      case "=":
+        {
+          break;
+        }
     }
   }
 
@@ -222,5 +183,58 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+}
+
+separatesFunctionIntoSmallerFunctions(text, op1, op2) {
+  final onlyNumbers = RegExp('[0-9]');
+  bool findOperator = false;
+  bool keepLooking = true;
+
+  while (keepLooking) {
+    keepLooking = false;
+    String operation = '';
+    String operator = '';
+
+    for (int i = 0; i < text.length; i++) {
+      if ((text[i] == op1 || text[i] == op2) && !findOperator) {
+        operation += text[i];
+        keepLooking = true;
+        findOperator = true;
+        if (text[i] == op1) operator = op1;
+        if (text[i] == op2) operator = op2;
+      } else if (onlyNumbers.hasMatch(text[i])) {
+        operation += text[i];
+
+        if (findOperator &&
+            ((i + 1 == text.length) || !onlyNumbers.hasMatch(text[i + 1]))) {
+          text = text.replaceAll(
+              operation, calculateString(operation, operator).toString());
+          operation = '';
+          findOperator = false;
+          break;
+        }
+      } else {
+        operation = '';
+      }
+    }
+  }
+  return text;
+}
+
+calculateString(text, op) {
+  List<String> textArray = [];
+  if (op == '*') {
+    textArray = text.split(op);
+    return double.parse(textArray[0]) * double.parse(textArray[1]);
+  } else if (op == '/') {
+    textArray = text.split(op);
+    return double.parse(textArray[0]) / double.parse(textArray[1]);
+  } else if (op == '+') {
+    textArray = text.split(op);
+    return double.parse(textArray[0]) + double.parse(textArray[1]);
+  } else if (op == '-') {
+    textArray = text.split(op);
+    return double.parse(textArray[0]) - double.parse(textArray[1]);
   }
 }
